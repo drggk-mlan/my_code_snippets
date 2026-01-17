@@ -1,0 +1,40 @@
+# 模型配置
+model:
+  name: 'simple_resnet'  # 可选: 'simple_cnn', 'simple_resnet'
+  num_classes: 10
+  num_blocks: [2, 2, 2, 2]  # ResNet层配置
+
+# 训练配置
+training:
+  num_epochs: 100
+  batch_size: 128
+  learning_rate: 0.1
+  weight_decay: 5e-4
+  momentum: 0.9
+
+# 数据配置
+data:
+  dataset: 'cifar10'  # 可选: 'cifar10', 'mnist'
+  data_dir: './data'
+  num_workers: 4
+  pin_memory: true
+
+# 优化器配置
+optimizer:
+  type: 'sgd'  # 可选: 'adam', 'sgd'
+
+# 学习率调度器配置
+scheduler:
+  type: 'multistep'  # 可选: 'step', 'multistep', 'cosine'
+  milestones: [50, 75]
+  gamma: 0.1
+
+# 日志配置
+logging:
+  log_interval: 100
+  save_dir: './checkpoints'
+  use_tensorboard: true
+
+# 其他配置
+seed: 42
+device: 'cuda'  # 可选: 'cuda', 'cpu', 'cuda:0'
