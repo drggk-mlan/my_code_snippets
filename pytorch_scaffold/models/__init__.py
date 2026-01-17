@@ -135,7 +135,7 @@ class ResidualBlock(nn.Module):
 class SimpleResNet(BaseModel):
     """简单的ResNet模型"""
     
-    def __init__(self, num_classes: int = 10, num_blocks: list = [2, 2, 2, 2]):
+    def __init__(self, num_classes: int = 10, num_blocks: list = None):
         """
         初始化模型
         
@@ -144,6 +144,9 @@ class SimpleResNet(BaseModel):
             num_blocks: 每层的残差块数量
         """
         super(SimpleResNet, self).__init__()
+        
+        if num_blocks is None:
+            num_blocks = [2, 2, 2, 2]
         
         self.in_channels = 64
         

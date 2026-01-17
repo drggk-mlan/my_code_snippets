@@ -66,7 +66,8 @@ def save_checkpoint(state: dict, save_dir: str, filename: str = 'checkpoint.pth'
 
 
 def load_checkpoint(checkpoint_path: str, model: torch.nn.Module, 
-                    optimizer: torch.optim.Optimizer = None) -> dict:
+                    optimizer: torch.optim.Optimizer = None,
+                    map_location: str = None) -> dict:
     """
     加载模型检查点
     
@@ -74,11 +75,12 @@ def load_checkpoint(checkpoint_path: str, model: torch.nn.Module,
         checkpoint_path: 检查点文件路径
         model: PyTorch模型
         optimizer: 优化器（可选）
+        map_location: 设备映射（可选，如'cpu'或'cuda:0'）
         
     Returns:
         包含训练状态的字典
     """
-    checkpoint = torch.load(checkpoint_path)
+    checkpoint = torch.load(checkpoint_path, map_location=map_location)
     model.load_state_dict(checkpoint['model_state_dict'])
     
     if optimizer is not None and 'optimizer_state_dict' in checkpoint:

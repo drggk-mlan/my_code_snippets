@@ -206,14 +206,18 @@ class Trainer:
         
         save_checkpoint(state, self.save_dir, filename)
     
-    def load_checkpoint(self, checkpoint_path: str):
+    def load_checkpoint(self, checkpoint_path: str, map_location: str = None):
         """
         加载检查点
         
         Args:
             checkpoint_path: 检查点路径
+            map_location: 设备映射（可选）
         """
-        checkpoint = torch.load(checkpoint_path)
+        if map_location is None:
+            map_location = str(self.device)
+        
+        checkpoint = torch.load(checkpoint_path, map_location=map_location)
         self.model.load_state_dict(checkpoint['model_state_dict'])
         self.optimizer.load_state_dict(checkpoint['optimizer_state_dict'])
         self.epoch = checkpoint['epoch']
